@@ -44,6 +44,16 @@
       "username": "jennifer",
       "password": "",
       "id": 9
+    },
+    {
+      "username": "Clayton",
+      "password": "password",
+      "id": 10
+    },
+    {
+      "username": "Scott",
+      "password": "",
+      "id": 11
     }
   ],
   "Words": [
@@ -286,7 +296,123 @@
       "name": "ice-cream",
       "pronunciation": "ˌīs-ˈkrēm",
       "id": 48
+    },
+    {
+      "name": "tiger",
+      "pronunciation": "ˈtī-gər",
+      "id": 49
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 50
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 51
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 52
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 53
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 54
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 55
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 56
+    },
+    {
+      "name": "mountain",
+      "pronunciation": "ˈmau̇n-tᵊn",
+      "id": 57
+    },
+    {
+      "name": "dog",
+      "pronunciation": "ˈdȯg",
+      "id": 58
+    },
+    {
+      "name": "cat",
+      "pronunciation": "ˈkat",
+      "id": 59
+    },
+    {
+      "name": "tree",
+      "pronunciation": "ˈtrē",
+      "id": 60
+    },
+    {
+      "name": "tree",
+      "pronunciation": "ˈtrē",
+      "id": 61
+    },
+    {
+      "name": "dog",
+      "pronunciation": "ˈdȯg",
+      "id": 62
+    },
+    {
+      "name": "tiger",
+      "pronunciation": "ˈtī-gər",
+      "id": 63
+    },
+    {
+      "name": "tiger",
+      "pronunciation": "ˈtī-gər",
+      "id": 64
+    },
+    {
+      "name": "search",
+      "pronunciation": "ˈsərch",
+      "id": 65
     }
   ],
-  "Favorites": []
+  "Favorites": [
+    {
+      "userId": 10,
+      "wordId": 59,
+      "id": 2
+    },
+    {
+      "userId": 11,
+      "wordId": 60,
+      "id": 3
+    },
+    {
+      "userId": 10,
+      "wordId": 62,
+      "id": 4
+    },
+    {
+      "userId": 10,
+      "wordId": 63,
+      "id": 5
+    },
+    {
+      "userId": 11,
+      "wordId": 64,
+      "id": 6
+    },
+    {
+      "userId": 11,
+      "wordId": 65,
+      "id": 7
+    }
+  ]
 }
