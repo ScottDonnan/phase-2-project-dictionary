@@ -33,16 +33,18 @@ function App() {
 
   function userLogin(e, creds) {
     e.preventDefault()
-    fetch(`http://localhost:3001/users?username=${creds.username}`)
-    .then(r=>r.json())
-    .then(users => {
-      if(users.length > 0){
-        setLoggedInUser(users)
-        setIsLoggedIn(true)
-        alert('good job brother u logged in')
-      } else {
-        alert('try again buddy')
-      }
+    fetch("users/1").then(r=>{
+      console.log(r)
+      r.json()
+    }).then(users => {
+      console.log(users)
+      // if(users.length > 0){
+      //   setLoggedInUser(users)
+      //   setIsLoggedIn(true)
+      //   alert('good job brother u logged in')
+      // } else {
+      //   alert('try again buddy')
+      // }
     }) 
   }
 
