@@ -33,11 +33,11 @@ function App() {
 
   function userLogin(e, creds) {
     e.preventDefault()
-    fetch("users/1").then(r=>{
+    fetch("users/1")
+    .then(r=>{
       console.log(r)
-      r.json()
-    }).then(users => {
-      console.log(users)
+      r.json().then(users => console.log(users))
+    })
       // if(users.length > 0){
       //   setLoggedInUser(users)
       //   setIsLoggedIn(true)
@@ -45,7 +45,7 @@ function App() {
       // } else {
       //   alert('try again buddy')
       // }
-    }) 
+    
   }
 
 
