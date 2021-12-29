@@ -26,7 +26,7 @@ function NavBar({userLogin, loggedInUser, setIsLoggedIn, isLoggedIn}) {
     
     const loggedIn = 
         <Div>
-            <h3>Hello {loggedInUser[0].username}</h3>
+            <h3>Hello {loggedInUser.username}</h3>
             <Button onClick={() => setIsLoggedIn(value => false)}>Log Out</Button>
         </Div>
 

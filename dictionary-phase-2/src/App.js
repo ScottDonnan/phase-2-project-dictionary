@@ -34,19 +34,22 @@ function App() {
   function userLogin(e, creds) {
     e.preventDefault()
     fetch("users/1")
-    .then(r=>{
-      console.log(r)
-      r.json().then(users => console.log(users))
-    })
+    .then(resp=>{
+      if (resp.ok) {
+        resp.json().then(user => {
+          setLoggedInUser(user)
+          setIsLoggedIn(true)
+        })
+      } else {
+        resp.json().then(data => alert(data))
+      }
+    })}
+
       // if(users.length > 0){
       //   setLoggedInUser(users)
       //   setIsLoggedIn(true)
       //   alert('good job brother u logged in')
-      // } else {
-      //   alert('try again buddy')
-      // }
-    
-  }
+     
 
 
   const addFavorite = (word) => { 
@@ -66,7 +69,7 @@ function App() {
   
   const linkedFavorites = (word) => {
     const userFavObj ={
-      userId: loggedInUser[0].id,
+      userId: loggedInUser.id,
       wordId: word.id
         }
       fetch('http://localhost:3001/favorites', {
@@ -77,16 +80,16 @@ function App() {
         body: JSON.stringify(userFavObj)
       })
       .then(res=>res.json())
-      .then(userFav => grabFavorites())
+      // .then(userFav => grabFavorites())
       
   }
 
-  const grabFavorites = () => {
-    setFavList(value => value = [])
-    fetch(`http://localhost:3001/user/${loggedInUser[0].id}/favorites?_expand=words`)
-    .then(res=>res.json())
-    .then(data => anotherFunction(data))
-  }
+  // const grabFavorites = () => {
+  //   setFavList(value => value = [])
+  //   fetch(`http://localhost:3001/user/${loggedInUser.id}/favorites?_expand=words`)
+  //   .then(res=>res.json())
+  //   .then(data => anotherFunction(data))
+  // }
       
 
   const anotherFunction = (data) => {
@@ -104,7 +107,7 @@ function App() {
     fetch(`http://localhost:3001/favorites/${favID}`, {
       method: 'DELETE'
     })
-    .then(grabFavorites())
+    // .then(grabFavorites())
   }
   
   return (
@@ -121,7 +124,7 @@ function App() {
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
             {searchWord? <WordCard searchWord={searchWord[0]} addFavorite={addFavorite} isLoggedIn={isLoggedIn}/> : null}
             {thesaurusSearchWord? <ThesaurusCard thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
-            <FavoriteList handleDeleteFavorite={handleDeleteFavorite} favList={favList} grabFavorites={grabFavorites} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser[0]}/>
+            <FavoriteList handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
           </Route>
         </Switch>
     </div>
