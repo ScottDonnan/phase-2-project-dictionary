@@ -2,12 +2,11 @@ import { useState } from "react"
 import Card from "../styled/card"
 import styled from "styled-components"
 
-function WordCard({searchWord, addFavorite, isLoggedIn}) {
-    const [isLiked, setIsLiked] = useState(true)
-    // const [likedWord, setLikedWord] = useState('')
+function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInUser}) {
+    // const [isLiked, setIsLiked] = useState(true)
 
-   const subdirectory = searchWord.hwi.prs[0].sound.audio[0]
-   const soundFile = searchWord.hwi.prs[0].sound.audio 
+   const subdirectory = searchWord.hwi?.prs[0].sound.audio[0]
+   const soundFile = searchWord.hwi?.prs[0].sound.audio 
    const audioElement = new Audio(`https://media.merriam-webster.com/audio/prons/en/us/mp3/${subdirectory}/${soundFile}.mp3`)
 
    let isImage = true
@@ -24,23 +23,16 @@ function WordCard({searchWord, addFavorite, isLoggedIn}) {
        isImage = false
    }
     
-   const likedObj = { name: searchWordName,
+   const wordToBeFavorite = { name: searchWord.meta.id,
                       pronunciation: searchWord.hwi.prs[0].mw
                     }
-
-   const handleLike = () => {
-       if(isLoggedIn === false) {
-           alert("Please Log In")
-        } else {
-            setIsLiked(!isLiked)
-        }
-       
-       if (isLiked === true){
-           addFavorite(likedObj)
-       } else if (isLiked === false){
-           console.log('nothing to add here!')
-       }
-   }
+//    const handleLike = () => {       
+//        if (isLiked === true){
+//            addWordToDatabase(likedObj)
+//        } else if (isLiked === false){
+//            console.log('nothing to add here!')
+//        }
+//    }
    
    
 
@@ -53,7 +45,9 @@ function WordCard({searchWord, addFavorite, isLoggedIn}) {
    let count = 1
     return(
         <Card>
-            <h2>{searchWordName} <LikeButton onClick={handleLike}>{isLiked ? '🤍' : '❤️' }</LikeButton></h2>
+            <h2>{searchWordName} 
+                {isLoggedIn ? <LikeButton onClick={() => addWordToDatabase(wordToBeFavorite, loggedInUser.id)}>{isLiked ? '❤️' : '🤍' }</LikeButton> : null}
+            </h2>
             <h3>{searchWord.hwi.prs[0].mw}</h3>
             <PlayButton onClick={playAudio}>Say Word</PlayButton>
             {searchWord.shortdef.map((word, index) => {

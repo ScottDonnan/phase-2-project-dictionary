@@ -12,8 +12,8 @@ function Search ({getWordDefinition, getWordSynonym, setSearchWord, setThesaurus
 
     function handleSubmit(e) {
         e.preventDefault()
-        setSearchWord(value => value = '')
-        setThesaurusSearchWord(value => value = '')
+        // setSearchWord(value => value = '')
+        // setThesaurusSearchWord(value => value = '')
         searchSwitcher ? getWordDefinition(searchValue) : getWordSynonym(searchValue)
     }
 
