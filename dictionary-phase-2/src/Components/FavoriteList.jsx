@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react"
 import Card from "../styled/card"
 
-function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn, loggedInUser}) {
+function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn, loggedInUser, isLiked}) {
     const [favoriteWords, setFavoriteWords] = useState([])
 
     useEffect(()=>{
@@ -10,7 +10,7 @@ function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn,
             .then(resp => resp.json())
             .then(words => setFavoriteWords(words))
         } 
-    },[]) 
+    },[isLoggedIn, isLiked]) 
     
     
 

@@ -2,7 +2,7 @@ import { useState } from "react"
 import Card from "../styled/card"
 import styled from "styled-components"
 
-function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInUser}) {
+function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInUser, addWordToFavorites}) {
     // const [isLiked, setIsLiked] = useState(true)
 
    const subdirectory = searchWord.hwi?.prs[0].sound.audio[0]
@@ -41,12 +41,19 @@ function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInU
        audioElement.play()
    }
 
+   function removeWordFromFavorites() {
+       console.log('remove favorite')
+   }
+
+   const favNameList = loggedInUser.favorites.map(fav => fav.name)
+
   
    let count = 1
     return(
         <Card>
             <h2>{searchWordName} 
-                {isLoggedIn ? <LikeButton onClick={() => addWordToDatabase(wordToBeFavorite, loggedInUser.id)}>{isLiked ? '❤️' : '🤍' }</LikeButton> : null}
+                {favNameList.includes(searchWord.meta.id) ? <LikeButton onClick={() => removeWordFromFavorites(wordToBeFavorite, loggedInUser)}>'❤️'</LikeButton> : 
+                <LikeButton onClick={() => addWordToFavorites(wordToBeFavorite, loggedInUser)}>'🤍'</LikeButton>}
             </h2>
             <h3>{searchWord.hwi.prs[0].mw}</h3>
             <PlayButton onClick={playAudio}>Say Word</PlayButton>

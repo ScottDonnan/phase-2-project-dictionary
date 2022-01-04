@@ -51,7 +51,7 @@ function App() {
           setIsLoggedIn(true)
         })
       } else {
-        resp.json().then(data => alert(data))
+        resp.json().then(data => console.log(data))
       }
     })}
 
@@ -62,25 +62,24 @@ function App() {
      
 
 
-  const addWordToDatabase = (favoritedWordObj, userId) => { 
-    debugger;
-    fetch('words', {
-      method: 'POST', 
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(favoritedWordObj)
-      }
-    )
-    .then(res=>res.json())
-    .then(wordObj=>linkedFavorites(wordObj, userId))
-  }
+  // const addWordToDatabase = (favoritedWordObj, userObj) => { 
+  //   fetch('words', {
+  //     method: 'POST', 
+  //     headers: {
+  //       'Content-Type': 'application/json'
+  //     },
+  //     body: JSON.stringify(favoritedWordObj)
+  //     }
+  //   )
+  //   .then(res=>res.json())
+  //   .then(wordObj=>linkedFavorites(wordObj, userObj))
+  // }
 
   
-  const linkedFavorites = (wordObj, userId) => {
+  const addWordToFavorites = (wordObj, userObj) => {
     const userFavObj ={
-      user_id: userId,
-      word_id: wordObj.id
+      user_id: userObj.id,
+      name: wordObj.name
         }
       fetch('favorites', {
         method: 'POST',
@@ -91,7 +90,10 @@ function App() {
       })
       .then(res => {
         if (res.ok) {
-          setIsLiked(true)
+          res.json().then(data => {
+            setIsLiked(true)
+            console.log(data)
+          })
         }
       })
       
@@ -135,7 +137,7 @@ function App() {
           <Route path="/">
             <NavBar userLogin={userLogin} loggedInUser={loggedInUser} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
-            {searchWord? <WordCard isLiked={isLiked} searchWord={searchWord[0]} addWordToDatabase={addWordToDatabase} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
+            {searchWord? <WordCard isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
             {thesaurusSearchWord? <ThesaurusCard thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
             <FavoriteList handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
           </Route>
