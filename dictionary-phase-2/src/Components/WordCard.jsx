@@ -2,7 +2,7 @@ import { useState } from "react"
 import Card from "../styled/card"
 import styled from "styled-components"
 
-function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInUser, addWordToFavorites}) {
+function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInUser, addWordToFavorites, favoriteWords}) {
     // const [isLiked, setIsLiked] = useState(true)
 
    const subdirectory = searchWord.hwi?.prs[0].sound.audio[0]
@@ -26,16 +26,6 @@ function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInU
    const wordToBeFavorite = { name: searchWord.meta.id,
                       pronunciation: searchWord.hwi.prs[0].mw
                     }
-//    const handleLike = () => {       
-//        if (isLiked === true){
-//            addWordToDatabase(likedObj)
-//        } else if (isLiked === false){
-//            console.log('nothing to add here!')
-//        }
-//    }
-   
-   
-
 
    const playAudio = () => {
        audioElement.play()
@@ -45,7 +35,7 @@ function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInU
        console.log('remove favorite')
    }
 
-   const favNameList = loggedInUser?.favorites.map(fav => fav.name)
+   const favNameList = favoriteWords.map(fav => fav.name)
    const favoriteButton = <div>{favNameList?.includes(searchWord.meta.id) ? <LikeButton onClick={() => removeWordFromFavorites(wordToBeFavorite, loggedInUser)}>'❤️'</LikeButton> : 
    <LikeButton onClick={() => addWordToFavorites(wordToBeFavorite, loggedInUser)}>'🤍'</LikeButton>}</div>
 

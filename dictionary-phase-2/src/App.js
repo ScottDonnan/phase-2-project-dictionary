@@ -128,7 +128,7 @@ function App() {
           <Route path="/">
             <NavBar userLogin={userLogin} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
-            {searchWord? <WordCard isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
+            {searchWord? <WordCard favoriteWords={favoriteWords} isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
             {thesaurusSearchWord? <ThesaurusCard thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
             <FavoriteList favoriteWords={favoriteWords} handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
           </Route>
