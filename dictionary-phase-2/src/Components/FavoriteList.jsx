@@ -18,9 +18,9 @@ function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn,
     let listOfFavorites =
         favoriteWords.map(word => {
         return <li key={word.id}>
-                 {word.name}
-               {/* <button onClick={() => handleDeleteFavorite(fav.favoriteID)}>❌</button> */}
-            </li>
+                    {word.name}
+                    <button onClick={() => handleDeleteFavorite(word)}>❌</button>
+                </li>
         })
 
     // favList.map(fav=>
@@ -33,9 +33,9 @@ function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn,
     // )
         
     
-    if (isLoggedIn === false){
-        listOfFavorites = [null]
-        }
+    // if (isLoggedIn === false){
+    //     listOfFavorites = [null]
+    //     }
 
     
     return(

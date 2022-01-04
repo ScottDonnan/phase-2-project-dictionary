@@ -2,7 +2,7 @@ import { useState } from "react"
 import Card from "../styled/card"
 import styled from "styled-components"
 
-function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInUser, addWordToFavorites, favoriteWords}) {
+function WordCard({searchWord, loggedInUser, addWordToFavorites, favoriteWords, setSearchWord}) {
     // const [isLiked, setIsLiked] = useState(true)
 
    const subdirectory = searchWord.hwi?.prs[0].sound.audio[0]
@@ -53,7 +53,8 @@ function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInU
                 console.log('counter', count)
                 count = count + 1
                 })}
-            {isImage ? <img src={image}/> : null}            
+            {isImage ? <img src={image}/> : null}
+            <button onClick={() => setSearchWord('')}>minimize</button>            
         </Card>
     )
 }

@@ -109,11 +109,18 @@ function App() {
     }
       
 
-  function handleDeleteFavorite(favID) {
-    fetch(`http://localhost:3001/favorites/${favID}`, {
+  function handleDeleteFavorite(word) {
+    console.log(word)
+    fetch(`favorites/${word.id}`, {
       method: 'DELETE'
     })
-    // .then(grabFavorites())
+    .then(resp => {
+      if(resp.ok) {
+        getFavorites(loggedInUser)
+      } else {
+        resp.json().then(data => alert(data.errors))
+      }
+    })
   }
   
   return (
@@ -128,8 +135,8 @@ function App() {
           <Route path="/">
             <NavBar userLogin={userLogin} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
-            {searchWord? <WordCard favoriteWords={favoriteWords} isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
-            {thesaurusSearchWord? <ThesaurusCard thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
+            {searchWord? <WordCard favoriteWords={favoriteWords} isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} setSearchWord={setSearchWord} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
+            {thesaurusSearchWord? <ThesaurusCard setThesaurusSearchWord={setThesaurusSearchWord} thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
             <FavoriteList favoriteWords={favoriteWords} handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
           </Route>
         </Switch>

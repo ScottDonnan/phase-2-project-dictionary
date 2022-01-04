@@ -96,8 +96,8 @@ const SearchBar = styled.input `
     font-family: Helvetica, sans-serif;
     display: flex;
     border-radius: 15px;
-    width: 500px;
-    height: 50px;
+    width: 75%;
+    height: 75%;
     font-size: 30px;
 
 `

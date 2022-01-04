@@ -1,6 +1,6 @@
 import Card from "../styled/card"
 
-function ThesaurusCard({thesaurusSearchWord}){
+function ThesaurusCard({thesaurusSearchWord, setThesaurusSearchWord}){
     return(
         <Card>
             <h2>{thesaurusSearchWord.hwi.hw}</h2>
@@ -10,6 +10,7 @@ function ThesaurusCard({thesaurusSearchWord}){
                     {words}
                 </p>)} 
             </h3>
+            <button onClick={() => setThesaurusSearchWord('')}>minimize</button>            
         </Card>
     )
 }
