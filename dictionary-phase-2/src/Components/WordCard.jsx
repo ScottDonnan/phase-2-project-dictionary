@@ -45,15 +45,16 @@ function WordCard({isLiked, searchWord, addWordToDatabase, isLoggedIn, loggedInU
        console.log('remove favorite')
    }
 
-   const favNameList = loggedInUser.favorites.map(fav => fav.name)
+   const favNameList = loggedInUser?.favorites.map(fav => fav.name)
+   const favoriteButton = <div>{favNameList?.includes(searchWord.meta.id) ? <LikeButton onClick={() => removeWordFromFavorites(wordToBeFavorite, loggedInUser)}>'❤️'</LikeButton> : 
+   <LikeButton onClick={() => addWordToFavorites(wordToBeFavorite, loggedInUser)}>'🤍'</LikeButton>}</div>
 
   
    let count = 1
     return(
         <Card>
             <h2>{searchWordName} 
-                {favNameList.includes(searchWord.meta.id) ? <LikeButton onClick={() => removeWordFromFavorites(wordToBeFavorite, loggedInUser)}>'❤️'</LikeButton> : 
-                <LikeButton onClick={() => addWordToFavorites(wordToBeFavorite, loggedInUser)}>'🤍'</LikeButton>}
+                {loggedInUser ? favoriteButton : null}
             </h2>
             <h3>{searchWord.hwi.prs[0].mw}</h3>
             <PlayButton onClick={playAudio}>Say Word</PlayButton>

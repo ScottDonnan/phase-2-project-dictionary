@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Search from './Components/Search';
 import WordOfTheDay from './Components/WordOfTheDay';
 import FavoriteList from './Components/FavoriteList';
@@ -12,18 +12,30 @@ import { Route, Switch } from 'react-router-dom'
 
 function App() {
   const [searchWord, setSearchWord] = useState('')
-  const [loggedInUser, setLoggedInUser] = useState([{}])
+  const [loggedInUser, setLoggedInUser] = useState(null)
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [favList, setFavList] = useState([])
   const [thesaurusSearchWord, setThesaurusSearchWord] = useState("")
   const [isLiked, setIsLiked] = useState(true)
-  const [favoriteArray, setFavoriteArray] = useState([])
- 
+  const [favoriteWords, setFavoriteWords] = useState([])
+  
+  useEffect(()=>{
+    if(loggedInUser){ 
+      getFavorites(loggedInUser)
+    } else {
+      setFavoriteWords([])
+    }
+  },[loggedInUser]) 
+
+  function getFavorites(user) {
+    fetch(`users/favorite_words/${user.id}`)
+        .then(resp => resp.json())
+        .then(words => setFavoriteWords(words))
+  }
   
   function getWordDefinition(searchValue) {
     fetch(`https://dictionaryapi.com/api/v3/references/collegiate/json/${searchValue}?key=818a2b96-1647-4667-8769-8f3de5ad1509`)
     .then(r => {
-          
             if (r.ok) {
               r.json().then(data => {
                   if (data[0].meta) {
@@ -54,27 +66,6 @@ function App() {
         resp.json().then(data => console.log(data))
       }
     })}
-
-      // if(users.length > 0){
-      //   setLoggedInUser(users)
-      //   setIsLoggedIn(true)
-      //   alert('good job brother u logged in')
-     
-
-
-  // const addWordToDatabase = (favoritedWordObj, userObj) => { 
-  //   fetch('words', {
-  //     method: 'POST', 
-  //     headers: {
-  //       'Content-Type': 'application/json'
-  //     },
-  //     body: JSON.stringify(favoritedWordObj)
-  //     }
-  //   )
-  //   .then(res=>res.json())
-  //   .then(wordObj=>linkedFavorites(wordObj, userObj))
-  // }
-
   
   const addWordToFavorites = (wordObj, userObj) => {
     const userFavObj ={
@@ -91,7 +82,7 @@ function App() {
       .then(res => {
         if (res.ok) {
           res.json().then(data => {
-            setIsLiked(true)
+            getFavorites(loggedInUser)
             console.log(data)
           })
         }
@@ -135,11 +126,11 @@ function App() {
             <WordOfTheDay />
           </Route>
           <Route path="/">
-            <NavBar userLogin={userLogin} loggedInUser={loggedInUser} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
+            <NavBar userLogin={userLogin} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
             {searchWord? <WordCard isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
             {thesaurusSearchWord? <ThesaurusCard thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
-            <FavoriteList handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
+            <FavoriteList favoriteWords={favoriteWords} handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
           </Route>
         </Switch>
     </div>

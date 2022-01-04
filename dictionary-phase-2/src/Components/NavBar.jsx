@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { useState } from 'react'
 
 
-function NavBar({userLogin, loggedInUser, setIsLoggedIn, isLoggedIn}) {
+function NavBar({userLogin, setLoggedInUser, loggedInUser, setIsLoggedIn, isLoggedIn}) {
     const [credentials, setCredentials] = useState({
         username: '',
         password: ''
@@ -26,14 +26,14 @@ function NavBar({userLogin, loggedInUser, setIsLoggedIn, isLoggedIn}) {
     
     const loggedIn = 
         <Div>
-            <h3>Hello {loggedInUser.username}</h3>
-            <Button onClick={() => setIsLoggedIn(value => false)}>Log Out</Button>
+            <h3>Hello {loggedInUser?.username}</h3>
+            <Button onClick={() => setLoggedInUser(null)}>Log Out</Button>
         </Div>
 
     return(
         <Header>
             <h1>React-ionary</h1>
-            {isLoggedIn ? loggedIn : loginForm}
+            {loggedInUser ? loggedIn : loginForm}
             <NavLink to="/newuser">Create New User</NavLink>
             <NavLink to="/randomword">Random Word</NavLink>
             <br/>

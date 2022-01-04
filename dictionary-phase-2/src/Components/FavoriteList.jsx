@@ -1,16 +1,16 @@
 import { useEffect, useState } from "react"
 import Card from "../styled/card"
 
-function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn, loggedInUser, isLiked}) {
-    const [favoriteWords, setFavoriteWords] = useState([])
+function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn, loggedInUser, favoriteWords}) {
+    // const [favoriteWords, setFavoriteWords] = useState([])
 
-    useEffect(()=>{
-        if(isLoggedIn === true){ 
-            fetch(`users/favorite_words/${loggedInUser.id}`)
-            .then(resp => resp.json())
-            .then(words => setFavoriteWords(words))
-        } 
-    },[isLoggedIn, isLiked]) 
+    // useEffect(()=>{
+    //     if(isLoggedIn === true){ 
+    //         fetch(`users/favorite_words/${loggedInUser.id}`)
+    //         .then(resp => resp.json())
+    //         .then(words => setFavoriteWords(words))
+    //     } 
+    // },[isLoggedIn]) 
     
     
 
@@ -40,7 +40,7 @@ function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn,
     
     return(
         <Card>
-            <h2>{isLoggedIn ? `${loggedInUser.username}'s Favorite Words` : 'Favorite Words'}</h2>
+            <h2>{loggedInUser ? `${loggedInUser.username}'s Favorite Words` : 'Favorite Words'}</h2>
             {listOfFavorites}
         </Card>
     )
