@@ -3,7 +3,6 @@ import Card from "../styled/card"
 import styled from "styled-components"
 
 function WordCard({searchWord, loggedInUser, addWordToFavorites, favoriteWords, setSearchWord}) {
-    // const [isLiked, setIsLiked] = useState(true)
 
    const subdirectory = searchWord.hwi?.prs[0].sound.audio[0]
    const soundFile = searchWord.hwi?.prs[0].sound.audio 

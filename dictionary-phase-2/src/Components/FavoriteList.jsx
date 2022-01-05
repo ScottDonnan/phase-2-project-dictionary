@@ -1,19 +1,7 @@
 import { useEffect, useState } from "react"
 import Card from "../styled/card"
 
-function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn, loggedInUser, favoriteWords}) {
-    // const [favoriteWords, setFavoriteWords] = useState([])
-
-    // useEffect(()=>{
-    //     if(isLoggedIn === true){ 
-    //         fetch(`users/favorite_words/${loggedInUser.id}`)
-    //         .then(resp => resp.json())
-    //         .then(words => setFavoriteWords(words))
-    //     } 
-    // },[isLoggedIn]) 
-    
-    
-
+function FavoriteList({handleDeleteFavorite, loggedInUser, favoriteWords}) {
 
     let listOfFavorites =
         favoriteWords.map(word => {
@@ -22,21 +10,6 @@ function FavoriteList({handleDeleteFavorite, favList, grabFavorites, isLoggedIn,
                     <button onClick={() => handleDeleteFavorite(word)}>❌</button>
                 </li>
         })
-
-    // favList.map(fav=>
-    //     <>
-    //         <li key={fav.id}>
-    //             {fav.name}
-    //             <button onClick={() => handleDeleteFavorite(fav.favoriteID)}>❌</button>
-    //         </li>
-    //     </>
-    // )
-        
-    
-    // if (isLoggedIn === false){
-    //     listOfFavorites = [null]
-    //     }
-
     
     return(
         <Card>
