@@ -98,20 +98,20 @@ function App() {
   // }
       
 
-  const anotherFunction = (data) => {
-      data.forEach(objs=>{ 
-      fetch(`http://localhost:3001/words/${objs.wordId}`)
-      .then(res=>res.json())
-      .then(data=> {
-        const favObj = {...data, favoriteID: objs.id}
-        setFavList(value=>[...value, favObj])})
-      })
-    }
+  // const anotherFunction = (data) => {
+  //     data.forEach(objs=>{ 
+  //     fetch(`http://localhost:3001/words/${objs.wordId}`)
+  //     .then(res=>res.json())
+  //     .then(data=> {
+  //       const favObj = {...data, favoriteID: objs.id}
+  //       setFavList(value=>[...value, favObj])})
+  //     })
+  //   }
       
 
-  function handleDeleteFavorite(word) {
-    console.log(word)
-    fetch(`favorites/${word.id}`, {
+  function handleDeleteFavorite(favorite) {
+    console.log(favorite)
+    fetch(`favorites/${favorite.id}`, {
       method: 'DELETE'
     })
     .then(resp => {
@@ -135,7 +135,7 @@ function App() {
           <Route path="/">
             <NavBar userLogin={userLogin} setLoggedInUser={setLoggedInUser} loggedInUser={loggedInUser} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
-            {searchWord? <WordCard favoriteWords={favoriteWords} isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} setSearchWord={setSearchWord} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
+            {searchWord? <WordCard handleDeleteFavorite={handleDeleteFavorite} favoriteWords={favoriteWords} isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} setSearchWord={setSearchWord} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
             {thesaurusSearchWord? <ThesaurusCard setThesaurusSearchWord={setThesaurusSearchWord} thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
             <FavoriteList favoriteWords={favoriteWords} handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
           </Route>

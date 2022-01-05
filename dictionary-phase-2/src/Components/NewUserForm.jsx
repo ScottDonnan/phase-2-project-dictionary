@@ -7,7 +7,8 @@ import styled from 'styled-components'
 function NewUserForm() {
     const [credentials, setCredentials] =useState({
         username: '',
-        password: ''
+        password: '',
+        passwordConfirmation: '',
     })
     
     const history = useHistory()
@@ -26,23 +27,35 @@ function NewUserForm() {
 
     function handleSubmit(e){
         e.preventDefault()
-        addUser(credentials)
+        addUser(credentials.username, credentials.password, credentials.passwordConfirmation)
         alert('Thank you for signing up to use the dictionary.')
     }
 
-    function addUser(username){
-        console.log(username);
-        fetch('http://localhost:3001/Users', {
+    function addUser(username, password, passConfirmation){
+        const userObj = {
+            username: username,
+            password: password,
+            password_confirmation: passConfirmation 
+        }
+
+        console.log(username, password, passConfirmation);
+
+        fetch('signup', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(username)
+            body: JSON.stringify(userObj)
         })
-        .then(r => r.json())
-        .then(newUser => {
-        console.log(newUser)
-         routeChange()
+        .then(resp => {
+            if (resp.ok) {
+                resp.json().then(newUser => {
+                    console.log(newUser)
+                    routeChange()
+                })
+            } else {
+                resp.json().then(data => alert(data.errors))
+            }
         })
     }
         
@@ -56,6 +69,9 @@ function NewUserForm() {
                 <br/>
                 <label>Password: </label>
                 <input type="text" name="password" onChange={handleChange} value={credentials.password} />
+                <br/>
+                <label>Confirm Password: </label>
+                <input type="text" name="passwordConfirmation" onChange={handleChange} value={credentials.passwordConfirmation} />
                 <br/>
                 <input type="submit" name="Submit" value="Create"/>
             </Form>
