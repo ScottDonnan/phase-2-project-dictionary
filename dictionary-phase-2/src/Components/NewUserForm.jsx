@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom'
 import Card from '../styled/card'
 import styled from 'styled-components'
 
-function NewUserForm() {
+function NewUserForm({setLoggedInUser, setFavoriteWords, getFavorites}) {
     const [credentials, setCredentials] =useState({
         username: '',
         password: '',
@@ -51,6 +51,9 @@ function NewUserForm() {
             if (resp.ok) {
                 resp.json().then(newUser => {
                     console.log(newUser)
+                    setLoggedInUser(newUser)
+                    getFavorites(newUser)
+                    // setFavoriteWords(newUser)
                     routeChange()
                 })
             } else {

@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'
 import { useState } from 'react'
 
 
-function NavBar({userLogin, setLoggedInUser, loggedInUser, setIsLoggedIn, isLoggedIn}) {
+function NavBar({setFavoriteWords, userLogin, setLoggedInUser, loggedInUser, setIsLoggedIn, isLoggedIn}) {
     const [credentials, setCredentials] = useState({
         username: '',
         password: ''
@@ -17,8 +17,19 @@ function NavBar({userLogin, setLoggedInUser, loggedInUser, setIsLoggedIn, isLogg
 
     }
 
+    function handleLogOut() {
+        fetch('logout', {method: "DELETE"})
+        .then(resp => {
+            if (resp.ok) {
+                setLoggedInUser(null)
+            } else {
+                console.log(resp)
+            }
+        })
+    }
+
     const loginForm = 
-        <Form onSubmit={(e)=>userLogin(e, credentials)}>
+        <Form onSubmit={(e)=>userLogin(credentials.username, credentials.password, e)}>
             <input type="text" name="username" placeholder="Name" value={credentials.username} onChange={handleChange} />
             <input type="text" name="password" placeholder="Password" value={credentials.password} onChange={handleChange}/>
             <Button type="submit" name="Submit">Login</Button>
@@ -27,14 +38,14 @@ function NavBar({userLogin, setLoggedInUser, loggedInUser, setIsLoggedIn, isLogg
     const loggedIn = 
         <Div>
             <h3>Hello {loggedInUser?.username}</h3>
-            <Button onClick={() => setLoggedInUser(null)}>Log Out</Button>
+            <Button onClick={handleLogOut}>Log Out</Button>
         </Div>
 
     return(
         <Header>
             <h1>React-ionary</h1>
             {loggedInUser ? loggedIn : loginForm}
-            <NavLink to="/newuser">Create New User</NavLink>
+            {loggedInUser ? null : <NavLink to="/newuser">Create New User</NavLink>}
             <NavLink to="/randomword">Random Word</NavLink>
             <br/>
         </Header>

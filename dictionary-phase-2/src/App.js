@@ -20,12 +20,22 @@ function App() {
   const [favoriteWords, setFavoriteWords] = useState([])
   
   useEffect(()=>{
-    if(loggedInUser){ 
-      getFavorites(loggedInUser)
-    } else {
-      setFavoriteWords([])
-    }
-  },[loggedInUser]) 
+    fetch('me').then(resp => {
+      if (resp.ok) {
+        resp.json()
+        .then(user => {
+          setLoggedInUser(user)
+          if(user) {
+            getFavorites(user)
+          } else {
+            setFavoriteWords([])
+          }
+        })
+      } else {
+        console.log(resp.json())
+      }
+    })
+  },[]) 
 
   function getFavorites(user) {
     fetch(`users/favorite_words/${user.id}`)
@@ -53,14 +63,23 @@ function App() {
     .then(data => setThesaurusSearchWord(data))
   }
 
-  function userLogin(e, creds) {
+  function userLogin(username, password, e) {
     e.preventDefault()
-    fetch("users/1")
+    const loginObj = {
+      username: username,
+      password: password
+    }
+
+    fetch(`login`, {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(loginObj)
+    })
     .then(resp=>{
       if (resp.ok) {
         resp.json().then(user => {
           setLoggedInUser(user)
-          setIsLoggedIn(true)
+          getFavorites(user)
         })
       } else {
         resp.json().then(data => console.log(data))
@@ -127,7 +146,7 @@ function App() {
     <div>
       <Switch>
           <Route path="/newuser">
-            <NewUserForm />
+            <NewUserForm setLoggedInUser={setLoggedInUser} setFavoriteWords={setFavoriteWords} getFavorites={getFavorites}/>
           </Route>
           <Route path="/randomword">
             <WordOfTheDay />
@@ -137,7 +156,7 @@ function App() {
             <Search getWordDefinition={getWordDefinition} getWordSynonym={getWordSynonym} setSearchWord={setSearchWord} setThesaurusSearchWord={setThesaurusSearchWord}/> 
             {searchWord? <WordCard handleDeleteFavorite={handleDeleteFavorite} favoriteWords={favoriteWords} isLiked={isLiked} addWordToFavorites={addWordToFavorites} isLiked={isLiked} setSearchWord={setSearchWord} searchWord={searchWord[0]} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null}
             {thesaurusSearchWord? <ThesaurusCard setThesaurusSearchWord={setThesaurusSearchWord} thesaurusSearchWord={thesaurusSearchWord[0]} /> : null}
-            <FavoriteList favoriteWords={favoriteWords} handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/>
+            {loggedInUser ? <FavoriteList favoriteWords={favoriteWords} handleDeleteFavorite={handleDeleteFavorite} favList={favList} isLoggedIn={isLoggedIn} loggedInUser={loggedInUser}/> : null }
           </Route>
         </Switch>
     </div>
