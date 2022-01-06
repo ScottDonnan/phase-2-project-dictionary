@@ -48,6 +48,7 @@ const Form = styled.form `
     display: flex;
     font-family: Helvetica, sans-serif;
     border-radius: 15px;
+    width: 66%;
 `
 const ButtonStyled = styled.button `
     font-family: Helvetica, sans-serif;
